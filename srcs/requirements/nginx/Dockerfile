@@ -1,6 +1,5 @@
 FROM debian:buster
 
-# Install Nginx
 RUN apt-get update && apt-get install -y nginx
 
 # Install OpenSSL & create SSL certificate and key
@@ -8,10 +7,9 @@ RUN apt-get update && apt-get install -y openssl
 RUN openssl req -newkey rsa:4096 -sha256 -x509 -nodes -days 365 \
   -subj "/C=ES/O=42/L=Madrid/CN=Inception" \
   -keyout /etc/ssl/nginx-selfsigned.key \
-  -out /etc/ssl/nginx-selfsigned.crt;
+  -out /etc/ssl/nginx-selfsigned.crt
 
-# Copy the configuration file from the current directory and paste it inside the conf.d directory
-COPY ./config/nginx.conf /etc/nginx/conf.d
+COPY ./conf/default /etc/nginx/sites-available/
 
 # EXPOSE port 443 but is not necessary because it's already in docker-compose.yml, so just for information
 EXPOSE 443

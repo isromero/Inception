@@ -1,0 +1,27 @@
+services:
+  wordpress:
+    build: ./requirements/wordpress/
+    image: wordpress
+    container_name: wordpress
+    restart: always
+    env_file:
+      - .env
+    networks:
+      - inception
+
+  nginx:
+    build: ./requirements/nginx/
+    image: nginx
+    container_name: nginx
+    restart: always
+    ports:
+      - "443:443"
+    env_file:
+      - .env
+    depends_on:
+      - wordpress
+    networks:
+      - inception
+
+networks:
+  inception:
