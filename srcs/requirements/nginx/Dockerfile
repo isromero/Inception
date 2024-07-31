@@ -11,6 +11,8 @@ RUN openssl req -newkey rsa:4096 -sha256 -x509 -nodes -days 365 \
 
 COPY ./conf/default /etc/nginx/sites-available/
 
+RUN mkdir -p /run/nginx
+
 # EXPOSE port 443 but is not necessary because it's already in docker-compose.yml, so just for information
 EXPOSE 443
 

@@ -1,29 +1,40 @@
 server {
-    listen 443 ssl;
-    listen [::]:443;
+  listen 443 ssl;
+  listen [::]:443;
 
-    server_name isromero.42.fr;
+  server_name isromero.42.fr;
 
-    root /var/www/html;
-    index index.php index.html index.htm;
+  root /var/www/html;
+  index index.php index.html index.htm;
 
-    # SSL certificate
-    ssl_certificate /etc/ssl/nginx-selfsigned.crt;
+  # SSL certificate
+  ssl_certificate /etc/ssl/nginx-selfsigned.crt;
 	ssl_certificate_key /etc/ssl/nginx-selfsigned.key;
 
-    # TLSv1.2 or TLSv1.3 only
+  # TLSv1.2 or TLSv1.3 only
 	ssl_protocols TLSv1.2 TLSv1.3;
 
-    # Serve static files directly
-    location / {
-        try_files $uri $uri/ /index.php?$args;
-    }
+  # Serve static files directly
+  location / {
+      try_files $uri $uri/ /index.php?$args;
+  }
 
-    # Pass PHP scripts to FastCGI server (PHP-FPM)
-    location ~ \.php$ {
-        include fastcgi_params;
-        fastcgi_pass wordpress:9000;  # Name of the container and port
-        fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
-        fastcgi_param PATH_INFO $fastcgi_path_info;
-    }
+  location = /404.html {
+    internal;
+  }
+
+  # Location block for static files
+  location ~* \.(css|js|jpg|jpeg|png|gif|ico|webp|svg)$ {
+    expires max;
+    log_not_found off;
+  }
+
+  # Pass PHP scripts to FastCGI server (PHP-FPM)
+  location ~ \.php$ {
+      include fastcgi_params;
+      fastcgi_pass wordpress:9000;  # Name of the container and port
+      fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
+      fastcgi_index index.php;
+      fastcgi_param PATH_INFO $fastcgi_path_info;
+  }
 }
