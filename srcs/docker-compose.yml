@@ -12,8 +12,6 @@ services:
       MARIADB_DATABASE: wordpress_db
       MARIADB_USER: isromero
       MARIADB_PASSWORD: mariadb_password
-      ADMIN_USER: main_user
-      ADMIN_PASSWORD: main_password
     networks:
       - inception
 
@@ -28,7 +26,7 @@ services:
       WORDPRESS_DB_HOST: mariadb
       WORDPRESS_DB_NAME: wordpress_db
       WORDPRESS_DB_USER: isromero
-      WORDPRESS_DB_PASSWORD: wordpress_password
+      WORDPRESS_DB_PASSWORD: mariadb_password
     depends_on:
       - mariadb
     networks:

@@ -4,12 +4,13 @@ RUN apt-get update && apt-get install -y nginx
 
 # Install OpenSSL & create SSL certificate and key
 RUN apt-get update && apt-get install -y openssl
+RUN mkdir -p /etc/nginx/ssl && chmod 700 /etc/nginx/ssl
 RUN openssl req -newkey rsa:4096 -sha256 -x509 -nodes -days 365 \
   -subj "/C=ES/O=42/L=Madrid/CN=Inception" \
-  -keyout /etc/ssl/nginx-selfsigned.key \
-  -out /etc/ssl/nginx-selfsigned.crt
+  -keyout /etc/nginx/ssl/nginx-selfsigned.key \
+  -out /etc/nginx/ssl/nginx-selfsigned.crt
 
-COPY ./conf/default /etc/nginx/sites-available/
+COPY ./conf/nginx.conf /etc/nginx/conf.d
 
 RUN mkdir -p /run/nginx
 

@@ -1,25 +1,23 @@
-# Usa Debian como base
 FROM debian:buster
 
 # Install MariaDB
-RUN apt-get update && \
-    apt-get install -y mariadb-server mariadb-client
+RUN apt-get update && apt-get install -y mariadb-server
 
 # Configure MariaDB
 RUN mkdir -p /var/lib/mysql && \
     chown -R mysql:mysql /var/lib/mysql && \
     chmod -R 755 /var/lib/mysql && \
-    mkdir -p /var/run/mysqld && \
-    chown -R mysql:mysql /var/run/mysqld
+    mkdir -p /var/run/mysqld/ && \
+    chown -R mysql:mysql /var/run/mysqld/
 
-# Copy the MariaDB configuration file
-COPY ./conf/my.cnf /etc/mysql/my.cnf
+# Copy my.cnf for MariaDB configuration
+COPY conf/my.cnf /etc/mysql/my.cnf
 
-# Copy the script that will create the database and the user
-COPY ./tools/entrypoint.sh /usr/local/bin/entrypoint.sh
-RUN chmod +x /usr/local/bin/entrypoint.sh
+ADD tools/run_db.sh /tmp/
+RUN chmod +x /tmp/run_db.sh
 
-ENTRYPOINT ["entrypoint.sh"]
+# Init DB, create user and database...
+ENTRYPOINT ["/tmp/run_db.sh"]
 
-# Configura el contenedor para iniciar MariaDB
-CMD ["mysqld_safe", "--defaults-file=/etc/mysql/my.cnf"]
+# Run MariaDB in the foreground
+CMD ["mysqld_safe"]

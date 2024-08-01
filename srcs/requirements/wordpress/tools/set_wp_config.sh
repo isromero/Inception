@@ -1,4 +1,6 @@
 #!/bin/bash
+set -e
+set -x
 
 # Replace the variables in the wp-config.php file
 sed -i "s/database_name_here/${WORDPRESS_DB_NAME}/" /var/www/html/wp-config.php
