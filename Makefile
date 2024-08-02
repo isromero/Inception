@@ -1,9 +1,9 @@
-COMPOSE				= docker-compose
-COMPOSE_FILE	= ./srcs/docker-compose.yml
-PROJECT_NAME	= inception
+COMPOSE					= docker-compose
+COMPOSE_FILE		= ./srcs/docker-compose.yml
+PROJECT_NAME		= inception
 
-VOLUME_DIR_WP	= /home/isromero/data/web_data
-VOLUME_DIR_DB	= /home/isromero/data/db_data
+VOLUME_DIR_WP		= /home/isromero/data/web_data
+VOLUME_DIR_DB		= /home/isromero/data/db_data
 
 .PHONY: all build up up-d down images stop start \
 				restart ps logs ls volumes volumes-prune \
