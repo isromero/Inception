@@ -1,21 +1,20 @@
 FROM debian:buster
 
-RUN apt-get update && apt-get install -y nginx
-
-# Install OpenSSL & create SSL certificate and key
-RUN apt-get update && apt-get install -y openssl
-RUN mkdir -p /etc/nginx/ssl && chmod 700 /etc/nginx/ssl
-RUN openssl req -newkey rsa:4096 -sha256 -x509 -nodes -days 365 \
-  -subj "/C=ES/O=42/L=Madrid/CN=Inception" \
-  -keyout /etc/nginx/ssl/nginx-selfsigned.key \
-  -out /etc/nginx/ssl/nginx-selfsigned.crt
+# Install necessary packages and create SSL certificate
+RUN apt-get update && apt-get install -y \
+    nginx \
+    openssl && \
+    rm -rf /var/lib/apt/lists/* && \
+    mkdir -p /etc/nginx/ssl && chmod 700 /etc/nginx/ssl && \
+    openssl req -newkey rsa:4096 -sha256 -x509 -nodes -days 365 \
+    -subj "/C=ES/O=42/L=Madrid/CN=Inception" \
+    -keyout /etc/nginx/ssl/nginx-selfsigned.key \
+    -out /etc/nginx/ssl/nginx-selfsigned.crt && \
+    mkdir -p /run/nginx
 
 COPY ./conf/nginx.conf /etc/nginx/conf.d
 
-RUN mkdir -p /run/nginx
-
-# EXPOSE port 443 but is not necessary because it's already in docker-compose.yml, so just for information
 EXPOSE 443
 
-# "daemon off;" tells Nginx to run in the foreground and not as a daemon(background)
+# Run Nginx in the foreground
 CMD ["nginx", "-g", "daemon off;"]
