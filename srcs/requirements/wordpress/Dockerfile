@@ -19,11 +19,7 @@ RUN mkdir -p /var/run/php
 
 COPY ./conf/www.conf /etc/php/7.3/fpm/pool.d/
 COPY ./tools/setup_wp.sh /tmp/
-RUN chmod +x /tmp/setup_wp.sh
-
-# Change the ownership of the directory to www-data(Nginx user)
-RUN chown -R www-data:www-data /var/www/html && \
-    chmod -R 755 /var/www/html
+RUN chmod +x /tmp/setup_wp.sh 
 
 ENTRYPOINT ["/tmp/setup_wp.sh"]
 

@@ -30,5 +30,9 @@ wp user create $WORDPRESS_USER $WORDPRESS_USER_EMAIL --role=author --user_pass=$
 # BONUS: Install the Redis Object Cache plugin
 wp plugin install redis-cache --activate --allow-root
 
+# Change the ownership of the directory to www-data(Nginx user)
+chown -R www-data:www-data /var/www/html
+chmod -R 755 /var/www/html
+
 # Execute the CMD from Dockerfile
 exec "$@"

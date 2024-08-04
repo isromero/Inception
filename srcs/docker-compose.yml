@@ -24,6 +24,7 @@ services:
       - ./.env
     depends_on:
       - mariadb
+      - redis
     networks:
       - inception
 
