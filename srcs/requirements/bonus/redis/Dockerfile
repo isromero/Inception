@@ -1,13 +1,9 @@
-FROM debian:buster
+FROM alpine:3.20
 
-RUN apt-get update && apt-get install -y \
-    redis \
-    php7.3-redis && \
-    rm -rf /var/lib/apt/lists/*
+RUN apk update && apk add --no-cache redis
 
 EXPOSE 6379
 
-COPY ./tools/setup_redis.sh /tmp/
-RUN chmod +x /tmp/setup_redis.sh
+COPY ./conf/redis.conf /etc/redis.conf
 
-CMD ["bash", "/tmp/setup_redis.sh"]
+CMD ["redis-server", "/etc/redis.conf"]
