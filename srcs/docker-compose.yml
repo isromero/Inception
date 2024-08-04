@@ -1,4 +1,3 @@
-version: '3'
 services:
   nginx:
     build: ./requirements/nginx/
@@ -6,26 +5,28 @@ services:
     container_name: nginx
     restart: always
     volumes:
-      - web_data:/var/www/html
+      - wordpress_data:/var/www/html
     ports:
       - "443:443"
     depends_on:
       - wordpress
     networks:
       - inception
+
   wordpress:
     build: ./requirements/wordpress/
     image: wordpress
     container_name: wordpress
     restart: always
     volumes:
-      - web_data:/var/www/html
+      - wordpress_data:/var/www/html
     env_file:
       - ./.env
     depends_on:
       - mariadb
     networks:
       - inception
+
   mariadb:
     build: ./requirements/mariadb/
     image: mariadb
@@ -37,18 +38,30 @@ services:
       - ./.env
     networks:
       - inception
+
+  # BONUS #
+  redis:
+    build: ./requirements/bonus/redis/
+    image: redis
+    container_name: redis
+    restart: always
+    networks:
+      - inception
+
 volumes:
   db_data:
     driver: local
     driver_opts:
       type: none
-      device: /home/isromero/data/db_data
+      device: /Users/isromero/data/db_data
+      # LINUX: device: /home/isromero/data/db_data
       o: bind
-  web_data:
+  wordpress_data:
     driver: local
     driver_opts:
       type: none
-      device: /home/isromero/data/web_data
+      device: /Users/isromero/data/wordpress_data
+      # LINUX: device: /home/isromero/data/wordpress_data
       o: bind
 networks:
   inception:

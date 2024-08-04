@@ -1,9 +1,11 @@
-COMPOSE					= docker-compose
+COMPOSE					= docker compose
 COMPOSE_FILE		= ./srcs/docker-compose.yml
 PROJECT_NAME		= inception
 
-VOLUME_DIR_WP		= /home/isromero/data/web_data
-VOLUME_DIR_DB		= /home/isromero/data/db_data
+# LINUX: VOLUME_DIR_WP		= /home/isromero/data/wordpress_data
+# LINUX: VOLUME_DIR_DB		= /home/isromero/data/db_data
+VOLUME_DIR_WP		= /Users/isromero/data/wordpress_data
+VOLUME_DIR_DB		= /Users/isromero/data/db_data
 
 .PHONY: all build up up-d down images stop start \
 				restart ps logs ls volumes volumes-prune \
@@ -61,4 +63,4 @@ networks-prune:
 prune:
 	docker system prune -af
 
-prune-all: prune volumes-prune networks-prune
+prune-all: down prune volumes-prune networks-prune
