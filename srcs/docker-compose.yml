@@ -66,6 +66,21 @@ services:
     networks:
       - inception
 
+  adminer:
+    build: ./requirements/bonus/adminer/
+    image: adminer
+    container_name: adminer
+    restart: always
+    volumes:
+      - wordpress_data:/var/www/html
+    ports:
+      - 8080:8080 # Not necessary because we already serving it with php-fpm in wordpress and nginx in 443
+    depends_on:
+      - wordpress
+      - mariadb
+    networks:
+      - inception
+
 volumes:
   db_data:
     driver: local
