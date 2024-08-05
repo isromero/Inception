@@ -15,7 +15,7 @@ all: build up
 
 build:
 	mkdir -p $(VOLUME_DIR_WP) $(VOLUME_DIR_DB)
-	$(COMPOSE) -f $(COMPOSE_FILE) build
+	$(COMPOSE) -f $(COMPOSE_FILE) build 
 
 up:
 	$(COMPOSE) -f $(COMPOSE_FILE) up

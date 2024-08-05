@@ -79,6 +79,25 @@ services:
     networks:
       - inception
 
+  watchtower:
+    build: ./requirements/bonus/watchtower/
+    image: watchtower
+    container_name: watchtower
+    restart: always
+    env_file:
+      - ./.env
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    depends_on:
+      - nginx
+      - wordpress
+      - mariadb
+      - redis
+      - vsftpd
+      - adminer
+    networks:
+      - inception
+
 volumes:
   db_data:
     driver: local
