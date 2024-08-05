@@ -73,8 +73,6 @@ services:
     restart: always
     volumes:
       - wordpress_data:/var/www/html
-    ports:
-      - 8080:8080 # Not necessary because we already serving it with php-fpm in wordpress and nginx in 443
     depends_on:
       - wordpress
       - mariadb
