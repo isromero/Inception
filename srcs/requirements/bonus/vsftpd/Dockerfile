@@ -1,7 +1,6 @@
-FROM debian:buster
+FROM alpine:3.20
 
-RUN apt-get update && apt-get install -y vsftpd && \
-    rm -rf /var/lib/apt/lists/*
+RUN apk update && apk add --no-cache vsftpd
 
 COPY ./conf/vsftpd.conf /etc/vsftpd.conf
 
