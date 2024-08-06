@@ -66,6 +66,16 @@ services:
     networks:
       - inception
 
+  static_web:
+    build: ./requirements/bonus/static_web/
+    image: static_web
+    container_name: static_web
+    restart: always
+    ports:
+      - "3000:3000"
+    networks:
+      - inception
+
   adminer:
     build: ./requirements/bonus/adminer/
     image: adminer
