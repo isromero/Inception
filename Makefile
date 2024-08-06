@@ -2,10 +2,10 @@ COMPOSE					= docker compose
 COMPOSE_FILE		= ./srcs/docker-compose.yml
 PROJECT_NAME		= inception
 
-# LINUX: VOLUME_DIR_WP		= /home/isromero/data/wordpress_data
-# LINUX: VOLUME_DIR_DB		= /home/isromero/data/db_data
-VOLUME_DIR_WP		= /Users/isromero/data/wordpress_data
-VOLUME_DIR_DB		= /Users/isromero/data/db_data
+VOLUME_DIR_WP		= /home/isromero/data/wordpress_data
+VOLUME_DIR_DB		= /home/isromero/data/db_data
+# MACOS: VOLUME_DIR_WP		= /Users/isromero/data/wordpress_data
+# MACOS: VOLUME_DIR_DB		= /Users/isromero/data/db_data
 
 .PHONY: all build up up-d down images stop start \
 				restart ps logs ls volumes volumes-prune \

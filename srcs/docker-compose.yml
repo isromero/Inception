@@ -113,15 +113,15 @@ volumes:
     driver: local
     driver_opts:
       type: none
-      device: /Users/isromero/data/db_data
-      # LINUX: device: /home/isromero/data/db_data
+      # MACOS: device: /Users/isromero/data/db_data
+      device: /home/isromero/data/db_data
       o: bind
   wordpress_data:
     driver: local
     driver_opts:
       type: none
-      device: /Users/isromero/data/wordpress_data
-      # LINUX: device: /home/isromero/data/wordpress_data
+      # MACOS: device: /Users/isromero/data/wordpress_data
+      device: /home/isromero/data/wordpress_data
       o: bind
 networks:
   inception:
